@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid, Typography, Button, Divider, MenuItem } from '@mui/material';
+import { Grid, Typography, MenuItem } from '@mui/material';
 import { styles } from './Panel.styles';
 import { ReactComponent as IconAgents } from '../assets/icons/iconAgents.svg';
 import { ReactComponent as IconMenu } from '../assets/icons/iconMenu.svg';
@@ -20,9 +20,14 @@ import * as dataSlice from '../redux/dataSlice';
 function Panel(type) {
 	// const classes = useStyles();
 	const dispatch = useDispatch();
+	const agentData = useSelector((state) => state.data.agent_description);
+
+	console.info('fetched data', agentData);
+
 	useEffect(() => {
-		dispatch(dataSlice.fetchAgentDescription());
-	}, [dispatch]);
+		const intervalId = setInterval(() => dispatch(dataSlice.fetchAgentDescription()), 1200);
+		return () => clearTimeout(intervalId);
+	}, []);
 
 	return (
 		<Grid container sx={styles.customGrid}>
@@ -62,7 +67,9 @@ function Panel(type) {
 							Total Alerts
 						</Typography>
 						<Grid container alignItems="center">
-							<Typography sx={styles.numericData}>23</Typography>
+							<Typography sx={styles.numericData}>
+								{agentData?.associated_alerts?.total_alerts ?? ''}
+							</Typography>
 							<ArrowDropDownIcon sx={{ color: 'active.icon' }} />
 						</Grid>
 					</Grid>
@@ -71,7 +78,9 @@ function Panel(type) {
 							Total Events
 						</Typography>
 						<Grid container alignItems="center">
-							<Typography sx={styles.numericData}>322</Typography>
+							<Typography sx={styles.numericData}>
+								{agentData?.associated_alerts?.total_events ?? ''}
+							</Typography>
 							<ArrowDropUpIcon sx={{ color: 'inactive.icon' }} />
 						</Grid>
 					</Grid>
@@ -80,7 +89,9 @@ function Panel(type) {
 							Installed endpoints
 						</Typography>
 						<Grid container alignItems="center">
-							<Typography sx={styles.numericData}>3k</Typography>
+							<Typography sx={styles.numericData}>
+								{agentData?.associated_alerts?.installed_endpoints ?? ''}
+							</Typography>
 							<ArrowDropUpIcon sx={{ visibility: 'hidden' }} />
 						</Grid>
 					</Grid>
@@ -105,16 +116,19 @@ function Panel(type) {
 					Meta data
 				</Typography>
 				<Grid container alignItems="center" sx={{ ...styles.scrollContainer, pt: '4px' }}>
-					{Object.entries([]).map(([key, value], i) => (
-						<Grid item xs={12} key={i}>
-							<Grid container sx={{ py: '4.5px' }}>
-								<Typography variant="subtitle1" sx={[styles.caption, styles.ellipsis]}>
-									{formatString(key)}
-								</Typography>
-								<Typography sx={[styles.description, styles.ellipsis]}>{value}</Typography>
+					{agentData?.meta_data &&
+						Object.entries(agentData?.meta_data).map(([key, value], i) => (
+							<Grid item xs={12} key={i}>
+								<Grid container sx={{ py: '4.5px' }}>
+									<Typography variant="subtitle1" sx={[styles.caption, styles.ellipsis]}>
+										{formatString(key)}
+									</Typography>
+									<Typography sx={[styles.description, styles.ellipsis]}>
+										{value}
+									</Typography>
+								</Grid>
 							</Grid>
-						</Grid>
-					))}
+						))}
 				</Grid>
 			</Grid>
 

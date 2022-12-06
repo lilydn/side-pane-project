@@ -12,14 +12,15 @@ function MainPage() {
 			columnSpacing={{ xs: 8, md: 14, lg: 20 }}
 			sx={{
 				height: '100vh',
+				flexWrap: 'nowrap',
 			}}
 		>
 			<Grid item>
 				<Panel type="agent_description" />
 			</Grid>
-			<Grid item>
+			{/* <Grid item>
 				<Panel type="event_description" />
-			</Grid>
+			</Grid> */}
 		</Grid>
 	);
 }

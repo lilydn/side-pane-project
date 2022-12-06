@@ -6,14 +6,12 @@ export default function configureAppStore(preloadedState) {
 	const middlewares = [thunkMiddleware];
 	const middlewareEnhancer = applyMiddleware(...middlewares);
 
-	const enhancers = [middlewareEnhancer];
-	const composedEnhancers = applyMiddleware(enhancers);
-
-	const store = configureStore(RootReducer, preloadedState, composedEnhancers);
-
-	// if (module.hot) {
-	// 	module.hot.accept('./reducers', () => store.replaceReducer(RootReducer));
-	// }
+	const store = configureStore({
+		reducer: RootReducer,
+		middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+		preloadedState,
+		enhancers: [middlewareEnhancer],
+	});
 
 	return store;
 }

@@ -1,12 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import dataSlice from './dataSlice';
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
 	data: dataSlice,
 });
 
-// const RootReducer = (state, action) => {
-// 	return appReducer(state, action);
-// };
+const RootReducer = (state, action) => {
+	return appReducer(state, action);
+};
 
-export default reducer;
+export default RootReducer;

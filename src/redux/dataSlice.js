@@ -8,23 +8,25 @@ export const dataSlice = createSlice({
 		event_description: null,
 	},
 	reducers: {
-		setAgentDescription: (state, action) => {},
-		setEventDescription: (state, action) => {
-			// state.metaData = action.payload.meta_data;
-			// state.limit = action.payload.meta_data.limit;
-			// state.companies = action.payload.companies;
-			// state.companiesLoading = false;
+		setAgentDescription: (state, action) => {
+			state.agent_description = action.payload;
 		},
+		setEventDescription: (state, action) => {},
 	},
 });
 
 export const fetchAgentDescription = () => async (dispatch) => {
 	try {
-		// const resolve = ;
-		const fetchedData = await new Promise((resolve, reject) => setTimeout(() => agent_description, 3000));
-		console.log('🚀 ~ file: dataSlice.js:27 ~ fetchAgentDescription ~ fetchedData', fetchedData);
+		let response = agent_description;
+		response = {
+			...response,
+			associated_alerts: {
+				...response.associated_alerts,
+				total_alerts: Math.floor(Math.random() * 100),
+			},
+		};
+		dispatch(setAgentDescription(response));
 	} catch (err) {}
-	// dispatch(setColumns(colOrder));
 };
 
 export const { setAgentDescription, setEventDescription } = dataSlice.actions;
