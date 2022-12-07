@@ -17,7 +17,7 @@ import { formatString } from '../utils/helperFunctions';
 import { useSelector, useDispatch } from 'react-redux';
 import * as dataSlice from '../redux/dataSlice';
 
-function Panel(type) {
+function Panel({ type }) {
 	// const classes = useStyles();
 	const dispatch = useDispatch();
 	const agentData = useSelector((state) => state.data.agent_description);

@@ -18,9 +18,9 @@ function MainPage() {
 			<Grid item>
 				<Panel type="agent_description" />
 			</Grid>
-			{/* <Grid item>
+			<Grid item>
 				<Panel type="event_description" />
-			</Grid> */}
+			</Grid>
 		</Grid>
 	);
 }
